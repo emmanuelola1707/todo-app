@@ -41,6 +41,9 @@ console.log(doubleWithMap);
 
 newArray.forEach((number) => console.log(number));
 
-//TASKS.forEach(entry => console.log(entry))
-
 console.log(TASKS.filter((entry) => entry.completed == true));
+
+function sayHello(name = "Opera mini") {
+	console.log("hello", + name);
+}
+sayHello()

@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	const body = document.querySelector("body");
 	const listContainer = document.querySelector("ul");
 	const tabSwitcherContainer = document.querySelector("#base-of-main");
+	const inputElement = document.getElementById("input-bar")
 
 	let TASKS = [];
 
@@ -56,14 +57,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 	function loadCompletedAndRender() {
 		console.log("loading completed and render");
-		const completed = TASKS.filter((entry) => entry.completed == true);
-		renderAll(completed);
+		TASKS = TASKS.filter((entry) => entry.completed == true);
+		renderAll();
 	}
 
 	function loadActiveAndRender() {
 		console.log("loading active and render");
-		const active = TASKS.filter((entry) => entry.completed == false);
-		renderAll(active);
+		TASKS = TASKS.filter((entry) => entry.completed == false);
+		renderAll();
 	}
 
 	function clearCompletedAndRender() {
@@ -73,10 +74,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 		console.log(TASKS);
 		renderAll();
 	}
+	function addEntryAndRender(newTask) {
+		const newId = TASKS[TASKS.length - 1]["id"] + 1;
+		const newObj = {
+			id: newId,
+			task: newTask,
+			completed: false,
+		}
+		console.log(newObj)
+		TASKS.push(newObj)
+		renderAll()
+	}
 
 	async function init() {
 		await loadAndRender();
 	}
+
+	inputElement.addEventListener("keydown", (e)=>{
+		if (e.key == "Enter") {
+			const newEntry = inputElement.value;
+			inputElement.value = "";
+			addEntryAndRender(newEntry);
+		}
+	})
 
 	themeChangerBtn.onclick = function () {
 		const htmlClassList = document.documentElement.classList;
